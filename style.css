@@ -1,0 +1,36 @@
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%; /* Barra lateral ocupa toda a largura da tela */
+        padding-top: 2rem; /* Espaçamento superior menor */
+        text-align: center;
+    }
+
+    .sidebar a {
+        font-size: 20px; /* Texto menor na barra lateral */
+    }
+
+    .sidebar .closebtn {
+        right: 10px; /* Posição do botão de fechar ajustada */
+    }
+
+    .account {
+        padding-top: 2rem; /* Espaçamento superior menor */
+    }
+
+    .account .pppa {
+        font-size: 16px; /* Tamanho de fonte menor */
+    }
+
+    .ola {
+        text-align: center; /* Texto de cumprimento centralizado */
+    }
+
+    .ola .perfil {
+        width: auto; /* Largura do perfil automática */
+        padding-right: 0; /* Espaçamento direito removido */
+    }
+
+    .right {
+        padding-left: 0; /* Espaçamento esquerdo removido */
+    }
+}

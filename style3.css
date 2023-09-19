@@ -1,0 +1,19 @@
+.info{
+
+padding-left: 25rem;
+
+}
+
+.red{
+
+border-radius: 3rem;
+box-shadow: 3px 2px 2px blue ;
+}
+
+.div{
+    font-size: 20px;
+padding-left: 10rem;
+padding-right: 10rem;
+box-shadow: 3px 2px 2px rgba(0, 0, 255, 0.7);
+     
+}

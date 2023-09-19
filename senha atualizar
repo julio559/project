@@ -1,0 +1,45 @@
+   if (!empty($senha)) {
+            // Lembre-se de proteger a senha antes de inseri-la no banco de dados.
+            $hashedSenha = password_hash($senha, PASSWORD_DEFAULT);
+            $stmt = $mysqli->prepare("UPDATE clientes SET senha = ? WHERE id = ?");
+            $stmt->bind_param("si", $hashedSenha, $id);
+    
+            // Verifique se há erros de SQL
+            if ($stmt->execute()) {
+                echo "Senha atualizada com sucesso!";
+            } else {
+                echo "Erro ao atualizar a senha: " . $stmt->error;
+            }
+        }
+    }
+
+
+    <input id="passoword" class="senha" type="password" name="passoword" placeholder="Nova Senha OBRIGATORIO">
+            <button type="button" class="btn btn-light" id="toggle">
+                            <i id="toggleIcon" class="fas fa-eye-slash"></i>
+                        </button>
+            <br><br>
+            <input class="radius2" type="submit" value="Atualizar Dados">
+        </form>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+    
+        const passwordInput = document.getElementById("passoword");
+        const toggleButton = document.getElementById("toggle");
+        const toggleIcon = document.getElementById("toggleIcon");
+
+        toggleButton.addEventListener("click", function() {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.className = "fas fa-eye";
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.className = "fas fa-eye-slash";
+            }
+        });
+
+    </script>

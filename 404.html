@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenar Fotos</title>
+    <style>
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Selecione a Ordem das Fotos</h1>
+    <ul id="photoList">
+        <li data-order="1">
+            <img src="/376094002_278707614938876_844801830545594154_n.jpg" alt="Foto 1">
+            <span>
+                <button onclick="movePhotoUp(this)">↑</button>
+                <button onclick="movePhotoDown(this)">↓</button>
+            </span>
+        </li>
+        <li data-order="2">
+            <img src="/beagles-filhotes-procurando-algo_1150-18193.avif" alt="Foto 2">
+            <span>
+                <button onclick="movePhotoUp(this)">↑</button>
+                <button onclick="movePhotoDown(this)">↓</button>
+            </span>
+        </li>
+        <li data-order="3">
+            <img src="foto3.jpg" alt="Foto 3">
+            <span>
+                <button onclick="movePhotoUp(this)">↑</button>
+                <button onclick="movePhotoDown(this)">↓</button>
+            </span>
+        </li>
+        <!-- Adicione mais fotos conforme necessário -->
+    </ul>
+
+    <script>
+        function movePhotoUp(button) {
+            const listItem = button.closest("li");
+            const order = parseInt(listItem.getAttribute("data-order"));
+
+            if (order > 1) {
+                const previousListItem = document.querySelector(`[data-order="${order - 1}"]`);
+                const parent = listItem.parentNode;
+
+                parent.insertBefore(listItem, previousListItem);
+                updateOrderAttributes();
+            }
+        }
+
+        function movePhotoDown(button) {
+            const listItem = button.closest("li");
+            const order = parseInt(listItem.getAttribute("data-order"));
+            const itemCount = document.querySelectorAll("li").length;
+
+            if (order < itemCount) {
+                const nextListItem = document.querySelector(`[data-order="${order + 1}"]`);
+                const parent = listItem.parentNode;
+
+                parent.insertBefore(nextListItem, listItem);
+                updateOrderAttributes();
+            }
+        }
+
+        function updateOrderAttributes() {
+            const listItems = document.querySelectorAll("li");
+
+            listItems.forEach((item, index) => {
+                item.setAttribute("data-order", index + 1);
+            });
+        }
+    </script>
+</body>
+</html>

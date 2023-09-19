@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Side Navigation Bar</title>
+
+<style>
+
+
+
+
+
+/* Reset de estilos padrão para eliminar margens e preenchimentos */
+body, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo da barra de navegação lateral */
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    padding-top: 20px;
+}
+
+/* Estilo da lista de links */
+.sidenav ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sidenav li {
+    padding: 10px;
+}
+
+.sidenav a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.sidenav a:hover {
+    background-color: #555;
+}
+
+/* Estilo do conteúdo principal */
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+</style>
+
+</head>
+<body>
+    <div class="sidenav">
+        <ul>
+            <li><a href="#">Página 1</a></li>
+            <li><a href="#">Página 2</a></li>
+            <li><a href="#">Página 3</a></li>
+            <li><a href="#">Página 4</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <h1>Conteúdo Principal</h1>
+        <p>Bem-vindo à página principal.</p>
+    </div>
+</body>
+</html>
