@@ -2,7 +2,7 @@
 include ('conexao.php');
 include ('insertc_client.php');
 
-
+$senha = isset(  $_POST['senha']);
 if ($mysqli->connect_errno) {
     echo "Falha ao conectar: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 } else {
@@ -221,6 +221,9 @@ border-radius: 3rem;
                 <input type="date" value="<?php echo $dat ?? ''; ?>" name="data" id="opa" placeholder="data" required>
                 <br><br><br>
                 <input type="password" name="senha" class="ola" id="senha" placeholder="senha" required>
+           
+
+
 <button type="button" class="btn btn-light" id="toggle">
     <i id="toggleIcon" class="fas fa-eye-slash"></i>
 </button>

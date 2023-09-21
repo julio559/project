@@ -219,14 +219,14 @@ if (isset($_GET['nome']) && is_numeric($_GET['nome'])) {
         </div>
 
 
-        <h4><strong> Editar Informações do perfil </strong></h4>
+        <h4><strong> fazer uma pagina no qual você acessa sua propia conta Editar Informações do perfil </strong></h4>
         <br>
 
         <input id="config" type="email" value="<?php echo $email; ?>" name="email" placeholder="Email">
         <br><br>
         <input id="config" value="<?php echo $nome; ?>" type="text" name="nome" placeholder="Nome Completo">
         <br><br>
-        <input type="text" id="config" value="<?php echo $numero; ?>" name="numero" placeholder="Número de Telefone">
+        <input type="tel" id="config" value="<?php echo $numero; ?>" name="numero" placeholder="Número de Telefone">
         <br><br>
         <input type="date" id="config" value="<?php echo $data; ?>" name="data" placeholder="Data de Nascimento">
         <br><br>

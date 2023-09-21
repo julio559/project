@@ -9,6 +9,13 @@ if (count($_POST) > 0) {
     $data = $_POST['data'];
     $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
+if ( $senha < 8 || $senha > 20  ){
+
+echo " a senha deve conter entre 8 a 20 caracteres ";
+die();
+
+}
+
     if (isset($_FILES['file'])) {
         $arquivo = $_FILES['file'];
 

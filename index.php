@@ -212,7 +212,7 @@ align-items: center;
                     </div>
                 </div>
                 <div class="entrar1">
-<input type="checkbox" required value="" > Aceita nossos termos? <br>caso não o conheça </input> <a href="termo.php">clique aqui </a>
+<input type="radio" required value="" > Aceita nossos termos? <br>caso não o conheça </input> <a href="termo.php">clique aqui </a>
 <br> <br> 
                     <input type="submit" name="enviar" class="ola" value="Entrar" id="entrar">
                     <a href="criar.php">Criar conta</a>

@@ -26,6 +26,19 @@ while ($row = $sql2->fetch_assoc()) {
 
 }
 
+$sql3 = "SELECT foto, path, descricao, nome_usuario FROM post WHERE id_usuario = $id";
+$quey = $mysqli -> query($sql3);
+while( $row = $quey -> fetch_assoc() ){
+
+$n = $row['nome_usuario'];
+$f = $row['foto'];
+$p = $row['path'];
+echo $f;
+
+
+}
+
+
 ?>
 
 

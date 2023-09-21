@@ -134,6 +134,8 @@ if (isset($_POST['pe'])) {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
+            width: 100vw;
+            
         }
 
 
@@ -427,6 +429,42 @@ border: none;
 
 }
 
+
+
+
+
+
+@media screen and (min-width: 380px) {
+    .post_image {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        width: 100%;
+    }
+}
+
+*{
+
+align-items: center;
+
+}
+
+@media screen and (max-width: 480px) {
+    .perfil {
+        margin: 10px; /* Reduza a margem para telas menores */
+    }
+    
+    .sidebar {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    .post_image {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+
+
     </style>
 </head>
 
@@ -435,7 +473,7 @@ border: none;
 
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
+        <div class="container-fluid" id="nav" >
 
 
             <button class="ola" onclick="ola()" alt="voltar" id="voltar">
