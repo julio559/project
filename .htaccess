@@ -1,0 +1,1 @@
+errorDocument 404 http://localhost/trampo/404.phtml# 
