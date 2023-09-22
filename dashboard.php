@@ -642,7 +642,7 @@ $id = $_COOKIE['id'];
     <?php
     include('conexao.php');
 
-    $sql = "SELECT id_usuario, path, descricao, nome_usuario, image_usuario FROM post ORDER BY RAND()";
+    $sql = "SELECT id id_usuario, path, descricao, nome_usuario, image_usuario FROM post ORDER BY RAND()";
     $result = $mysqli->query($sql);
 
     if ($result) {
@@ -662,7 +662,7 @@ $id = $_COOKIE['id'];
 
     function renderPost($post)
     {
-
+$id = $post['id'];
         $nome = $post['nome_usuario'];
         $image = $post['image_usuario'];
         $pathAleatorio = $post['path'];
@@ -737,7 +737,8 @@ $idd = $post['id_usuario'];
     }
 
    
-
+$like3 = "SELECT COUNT (*) FROM like_count WHERE id = $id  "
+        
 
     ?>
 
