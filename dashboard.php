@@ -60,6 +60,8 @@ if (isset($_GET['img'])) {
 if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
+
+    $id_usuario = $id;
     if (setcookie("id", $_GET['id'], $duracao))
         ;}
 
@@ -649,7 +651,7 @@ $id = $_COOKIE['id'];
     <?php
     include('conexao.php');
 
-    $sql = "SELECT id, id_usuario, path, descricao, nome_usuario, image_usuario, tempo FROM post ORDER BY RAND()";
+    $sql = "SELECT id, id_usuario, path, descricao, nome_usuario, image_usuario,like_count, tempo FROM post ORDER BY RAND()";
     $result = $mysqli->query($sql);
 
     if ($result) {
@@ -671,6 +673,7 @@ $id = $_COOKIE['id'];
     function renderPost($post)
     {
 $id = $post['id'];
+$like_count = $post['like_count'];
         $nome = $post['nome_usuario'];
         $image = $post['image_usuario'];
         $pathAleatorio = $post['path'];
@@ -682,29 +685,15 @@ $tempo = $post['tempo'];
 $mysqli = new mysqli('localhost', 'root', '', 'loja');
 if ($mysqli->connect_error) {
     die('Erro de conexão: ' . $mysqli->connect_error);
-}
+}else
 
-$idd = $id;
- 
-
-$count = "SELECT COUNT(post_id) as quantidade FROM post_likes WHERE post_id = $idd";
-$result = $mysqli->query($count);
-
-if ($result) {
-    $quantidade = $result->fetch_assoc();
-    $id_post = $quantidade['quantidade'];
-
-
-} else {
-    echo 'Erro na consulta: ' . $mysqli->error;
-}
 
     
 
 return " 
     <div class='container' id='home'>
     <div class='post-header'>
-    <form action='perfil.php' method='GET'>
+    <form action='pesquisa.php' method='GET'>
 
 <button id ='opa233'> 
         <img id='myImage'  ondblclick='like()' src='$image'>
@@ -716,7 +705,7 @@ return "
     <img class='post_image'  src='$pathAleatorio' width='500px'>
     <div class='post-actions'>
         <div class='left-actions'>
-        <button class='like-button' data-post-id='$id'>❤️ <span class='like-number'>$id_post</span></button>
+        <button class='like-button' data-post-id='$id'>❤️ <span class='like-number'> $like_count </span></button>
 
             
 

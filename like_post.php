@@ -1,9 +1,12 @@
 <?php
-// Check if the action is 'like' and if a valid post_id is provided
+include('conexao.php');
+include('dashboard.php');
+
 if (isset($_POST['action']) && $_POST['action'] === 'like' && isset($_POST['post_id'])) {
     // Connect to your database
     $mysqli = new mysqli('localhost', 'root', '', 'loja');
 
+    // Check for database connection errors
     if ($mysqli->connect_error) {
         die('Database connection error: ' . $mysqli->connect_error);
     }
@@ -15,7 +18,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'like' && isset($_POST['post
     // For simplicity, we'll assume the user has not already liked the post
 
     // Increment the like count for the post in the database
-    $update_query = "UPDATE post SET likes = likes + 1 WHERE id = '$post_id'";
+    $update_query = "UPDATE post SET like_count = like_count + 1 WHERE id = $post_id";
     
     if ($mysqli->query($update_query) === TRUE) {
         // Successfully updated the like count
@@ -30,7 +33,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'like' && isset($_POST['post
 } else {
     $response = ['success' => false, 'message' => 'Invalid request'];
 }
-echo json_encode(['success' => true]);
+
 // Return the response as JSON
 header('Content-Type: application/json');
 echo json_encode($response);

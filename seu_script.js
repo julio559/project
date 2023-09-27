@@ -13,7 +13,10 @@ $(document).ready(function() {
                 post_id: post_id
             },
             success: function(response) {
+                console.log(response)
+
                 try {
+                  
                     var result = JSON.parse(response);
                     if (result.success) {
                         // Atualização bem-sucedida no lado do servidor
@@ -24,6 +27,7 @@ $(document).ready(function() {
                         alert('Erro: ' + result.message);
                     }
                 } catch (error) {
+                    console.log(error.response)
                     console.error('Erro ao analisar a resposta JSON:', error);
                 }
             },

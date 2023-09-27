@@ -19,7 +19,7 @@ $cli = $mysqli -> query($sqlcli);
 while ( $row3 = $cli -> fetch_assoc() ){
 
     $id_client = $row3['nome'];
-    $img = $row['img'];
+    $img = $row3['img'];
 }
 
 $sql ="SELECT id_usuario FROM post WHERE id = $id";
