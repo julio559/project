@@ -649,7 +649,7 @@ $id = $_COOKIE['id'];
     <?php
     include('conexao.php');
 
-    $sql = "SELECT id, id_usuario, path, descricao, nome_usuario, image_usuario FROM post ORDER BY RAND()";
+    $sql = "SELECT id, id_usuario, path, descricao, nome_usuario, image_usuario, timestampp FROM post ORDER BY RAND()";
     $result = $mysqli->query($sql);
 
     if ($result) {
@@ -677,7 +677,7 @@ $id = $post['id'];
         $nomeAleatorio = $post['descricao'];
 $idd = $post['id_usuario'];
 
-
+$tempo = $post['timestamp'];
 
 $mysqli = new mysqli('localhost', 'root', '', 'loja');
 if ($mysqli->connect_error) {
@@ -751,6 +751,7 @@ return "
                 </div>
             </div>
         </div>
+        <span> $tempo </span>
         <button onclick='savePost()'>🔖</button>
     </div>
     <div class='post-content'>
