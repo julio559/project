@@ -649,7 +649,7 @@ $id = $_COOKIE['id'];
     <?php
     include('conexao.php');
 
-    $sql = "SELECT id, id_usuario, path, descricao, nome_usuario, image_usuario, timestampp FROM post ORDER BY RAND()";
+    $sql = "SELECT id, id_usuario, path, descricao, nome_usuario, image_usuario, tempo FROM post ORDER BY RAND()";
     $result = $mysqli->query($sql);
 
     if ($result) {
@@ -677,7 +677,7 @@ $id = $post['id'];
         $nomeAleatorio = $post['descricao'];
 $idd = $post['id_usuario'];
 
-$tempo = $post['timestamp'];
+$tempo = $post['tempo'];
 
 $mysqli = new mysqli('localhost', 'root', '', 'loja');
 if ($mysqli->connect_error) {
@@ -716,7 +716,8 @@ return "
     <img class='post_image'  src='$pathAleatorio' width='500px'>
     <div class='post-actions'>
         <div class='left-actions'>
-            <button class='like-button' onclick='likePost(this)'>❤️   <span class='like-number'> $id_post </span></button>
+        <button class='like-button' data-post-id='$id'>❤️ <span class='like-number'>$id_post</span></button>
+
             
 
             <button type='button' class='button23' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='@mdo'>
@@ -751,7 +752,7 @@ return "
                 </div>
             </div>
         </div>
-        <span> $tempo </span>
+     
         <button onclick='savePost()'>🔖</button>
     </div>
     <div class='post-content'>
@@ -760,6 +761,7 @@ return "
     </div>
     <div class='post-comments'>
         <p>View all 15 comments</p>
+        <p> postado em $tempo </p>
     </div>
 </div>";
     }
@@ -770,67 +772,53 @@ return "
     }
 
    
-$like3 = "SELECT COUNT (*) FROM like_count WHERE id = $id  "
+  
+    
+    
+    
         
 
     ?>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+<script src="seu_script.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.like-button').on('click', function() {
+            var post_id = $(this).data('post-id');
+            var likeCountElement = $(this).find('.like-number');
+            var currentLikeCount = parseInt(likeCountElement.text()) || 0;
+            currentLikeCount++;
+            likeCountElement.text(currentLikeCount);
 
-
-
-function toggleDarkMode() {
-    const body = document.body;
-
-    
-    if (body.classList.contains("dark-mode")) {
-        body.classList.remove("dark-mode");
-    } else {
-   
-        body.classList.add("dark-mode");
-    }
-}
-
-const toggleButton = document.getElementById("toggleDarkMode");
-toggleButton.addEventListener("click", toggleDarkMode);
-
-
-function likePost(button) {
-    var likeCountElement = button.querySelector('.like-number');
-    var currentLikeCount = parseInt(likeCountElement.textContent) || 0;
-    currentLikeCount++;
-    likeCountElement.textContent = currentLikeCount;
-    
-    // Aqui você pode fazer uma requisição AJAX para enviar o like para o servidor
-    var post_id = button.getAttribute('data-post-id');
-    $.ajax({
-        type: 'POST',
-        url: 'like_post.php',
-        data: {
-            action: 'like',
-            post_id: post_id
-        },
-        success: function(response) {
-            try {
-                var result = JSON.parse(response);
-                if (result.success) {
-                    // Atualização bem-sucedida no lado do servidor
-                    alert('Post curtido com sucesso!');
-                } else {
-                    // Exibir mensagem de erro do servidor, se houver
-                    alert('Erro: ' + result.message);
+            // Aqui você pode fazer uma requisição AJAX para enviar o like para o servidor
+            $.ajax({
+                type: 'POST',
+                url: 'like_post.php',
+                data: {
+                    action: 'like',
+                    post_id: post_id
+                },
+                success: function(response) {
+                    try {
+                        var result = JSON.parse(response);
+                        if (result.success) {
+                            // Atualização bem-sucedida no lado do servidor
+                            alert('Post curtido com sucesso!');
+                        } else {
+                            // Exibir mensagem de erro do servidor, se houver
+                            alert('Erro: ' + result.message);
+                        }
+                    } catch (error) {
+                        console.error('Erro ao analisar a resposta JSON:', error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erro AJAX:', status, error);
                 }
-            } catch (error) {
-                console.error('Erro ao analisar a resposta JSON:', error);
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error('Erro AJAX:', status, error);
-        }
+            });
+        });
     });
-
-            }
+             
 
         function toggleDarkMode() {
             const body = document.body;

@@ -1,34 +1,37 @@
 <?php
-session_start();
+// Check if the action is 'like' and if a valid post_id is provided
+if (isset($_POST['action']) && $_POST['action'] === 'like' && isset($_POST['post_id'])) {
+    // Connect to your database
+    $mysqli = new mysqli('localhost', 'root', '', 'loja');
 
-if (isset($_POST['action']) && $_POST['action'] == 'like') {
-    // Inclua seu arquivo de conexão com o banco de dados aqui
-    include('conexao.php');
-
-    $post_id = $_POST['post_id'];
-    $user_id = $_SESSION['usuario']; // Supondo que você tenha uma sessão de usuário
-    
-    // Verifique se o usuário já curtiu o post (você pode usar SQL para fazer isso)
-    $check_like_sql = "SELECT id FROM post_likes WHERE post_id = ? AND user_id = ?";
-    $stmt = $mysqli->prepare($check_like_sql);
-    $stmt->bind_param("ii", $post_id, $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows == 0) {
-        // O usuário ainda não curtiu o post, então insira o like
-        $insert_like_sql = "INSERT INTO post_likes (post_id, user_id) VALUES (?, ?)";
-        $stmt = $mysqli->prepare($insert_like_sql);
-        $stmt->bind_param("ii", $post_id, $user_id);
-        $stmt->execute();
-        
-        // Você pode retornar uma resposta ao cliente para indicar o sucesso
-        echo json_encode(['success' => true]);
-        exit;
-    } else {
-        // O usuário já curtiu o post
-        echo json_encode(['success' => false, 'message' => 'Você já curtiu este post.']);
-        exit;
+    if ($mysqli->connect_error) {
+        die('Database connection error: ' . $mysqli->connect_error);
     }
+
+    // Sanitize and get the post_id from the POST data
+    $post_id = $mysqli->real_escape_string($_POST['post_id']);
+
+    // Check if the user has already liked this post (you can use sessions or user authentication here)
+    // For simplicity, we'll assume the user has not already liked the post
+
+    // Increment the like count for the post in the database
+    $update_query = "UPDATE post SET likes = likes + 1 WHERE id = '$post_id'";
+    
+    if ($mysqli->query($update_query) === TRUE) {
+        // Successfully updated the like count
+        $response = ['success' => true];
+    } else {
+        // Error occurred while updating the like count
+        $response = ['success' => false, 'message' => 'Error updating like count'];
+    }
+
+    // Close the database connection
+    $mysqli->close();
+} else {
+    $response = ['success' => false, 'message' => 'Invalid request'];
 }
+echo json_encode(['success' => true]);
+// Return the response as JSON
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>
