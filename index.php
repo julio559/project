@@ -22,7 +22,7 @@ if (isset($_POST['enviar'])) {
         if (password_verify($senha, $usuario['senha'])) {
             $_SESSION['usuario'] = $usuario['id'];
             
-            header("Location: dashboard.php?nome=" . urlencode($usuario['nome']) . "&img=" . urlencode($usuario['img'])  . "&id=" . urlencode($usuario['id']));
+            header("Location: dashboard2.php?nome=" . urlencode($usuario['nome']) . "&img=" . urlencode($usuario['img'])  . "&id=" . urlencode($usuario['id']));
             exit;
         } else {
             echo 'Email ou senha incorretos';
@@ -35,7 +35,7 @@ if (isset($_POST['enviar'])) {
 
 
 if (isset($_SESSION['usuario'])) {
-    header("Location: dashboard.php");
+    header("Location: dashboard2.php");
     exit; 
 }
 ?>
@@ -212,7 +212,7 @@ align-items: center;
                     </div>
                 </div>
                 <div class="entrar1">
-<input type="radio" required value="" > Aceita nossos termos? <br>caso não o conheça </input> <a href="termo.php">clique aqui </a>
+<input type="checkbox" required> Aceita nossos termos? <br>caso não o conheça </input> <a href="termo.php">clique aqui </a>
 <br> <br> 
                     <input type="submit" name="enviar" class="ola" value="Entrar" id="entrar">
                     <a href="criar.php">Criar conta</a>

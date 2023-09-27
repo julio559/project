@@ -1,5 +1,12 @@
 <?php
 session_start();
+if (!isset($_SESSION['usuario'])){
+
+header('location: index.php');
+
+
+}
+
 
 include('conexao.php');
 include('nav.php');
@@ -155,13 +162,13 @@ if (isset($_POST['pe'])) {
             margin-right: 10px;
             border-radius: 5px;
             border: none;
-
+background: white;
 
         }
 
         .ola {
-
-            text-align: center;
+padding-left: 33rem ;
+           align-items: center;
         }
 
         .perfil p {
@@ -423,7 +430,7 @@ border-radius: 0rem;
 }
 
 #opa233{
-
+background-color: white;
 border: none;
 
 
@@ -601,7 +608,7 @@ $id = $_COOKIE['id'];
 
 
                 echo '<div class="perfil">';
-                echo '<form action="perfil.php" method="GET">';
+                echo '<form action="pesquisa.php" method="GET">';
                 echo '<input type="hidden" name="id" value="' . urlencode($row['id']) . '">';
                 echo '<br>';
                 echo '<button class="mudar" type="submit"><img class="uno" src="' . $row['img'] . '" width="40px">' . $row['nome'] . '</button>';
@@ -642,7 +649,7 @@ $id = $_COOKIE['id'];
     <?php
     include('conexao.php');
 
-    $sql = "SELECT id_usuario, path, descricao, nome_usuario, image_usuario FROM post ORDER BY RAND()";
+    $sql = "SELECT id, id_usuario, path, descricao, nome_usuario, image_usuario FROM post ORDER BY RAND()";
     $result = $mysqli->query($sql);
 
     if ($result) {
@@ -660,16 +667,41 @@ $id = $_COOKIE['id'];
 
     $mysqli->close();
 
+   
     function renderPost($post)
     {
-
+$id = $post['id'];
         $nome = $post['nome_usuario'];
         $image = $post['image_usuario'];
         $pathAleatorio = $post['path'];
         $nomeAleatorio = $post['descricao'];
 $idd = $post['id_usuario'];
 
-        return "
+
+
+$mysqli = new mysqli('localhost', 'root', '', 'loja');
+if ($mysqli->connect_error) {
+    die('Erro de conexão: ' . $mysqli->connect_error);
+}
+
+$idd = $id;
+ 
+
+$count = "SELECT COUNT(post_id) as quantidade FROM post_likes WHERE post_id = $idd";
+$result = $mysqli->query($count);
+
+if ($result) {
+    $quantidade = $result->fetch_assoc();
+    $id_post = $quantidade['quantidade'];
+
+
+} else {
+    echo 'Erro na consulta: ' . $mysqli->error;
+}
+
+    
+
+return " 
     <div class='container' id='home'>
     <div class='post-header'>
     <form action='perfil.php' method='GET'>
@@ -684,7 +716,7 @@ $idd = $post['id_usuario'];
     <img class='post_image'  src='$pathAleatorio' width='500px'>
     <div class='post-actions'>
         <div class='left-actions'>
-            <button class='like-button' onclick='likePost(this)'>❤️   <span class='like-number'>0</span></button>
+            <button class='like-button' onclick='likePost(this)'>❤️   <span class='like-number'> $id_post </span></button>
             
 
             <button type='button' class='button23' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='@mdo'>
@@ -737,11 +769,12 @@ $idd = $post['id_usuario'];
     }
 
    
-
+$like3 = "SELECT COUNT (*) FROM like_count WHERE id = $id  "
+        
 
     ?>
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
 
 
@@ -762,13 +795,41 @@ const toggleButton = document.getElementById("toggleDarkMode");
 toggleButton.addEventListener("click", toggleDarkMode);
 
 
-        function likePost(button) {
-            var likeCountElement = button.querySelector('.like-number');
-            var currentLikeCount = parseInt(likeCountElement.textContent) || 0;
-            currentLikeCount++;
-            likeCountElement.textContent = currentLikeCount;
-         
-    }
+function likePost(button) {
+    var likeCountElement = button.querySelector('.like-number');
+    var currentLikeCount = parseInt(likeCountElement.textContent) || 0;
+    currentLikeCount++;
+    likeCountElement.textContent = currentLikeCount;
+    
+    // Aqui você pode fazer uma requisição AJAX para enviar o like para o servidor
+    var post_id = button.getAttribute('data-post-id');
+    $.ajax({
+        type: 'POST',
+        url: 'like_post.php',
+        data: {
+            action: 'like',
+            post_id: post_id
+        },
+        success: function(response) {
+            try {
+                var result = JSON.parse(response);
+                if (result.success) {
+                    // Atualização bem-sucedida no lado do servidor
+                    alert('Post curtido com sucesso!');
+                } else {
+                    // Exibir mensagem de erro do servidor, se houver
+                    alert('Erro: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Erro ao analisar a resposta JSON:', error);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Erro AJAX:', status, error);
+        }
+    });
+
+            }
 
         function toggleDarkMode() {
             const body = document.body;
@@ -777,16 +838,16 @@ toggleButton.addEventListener("click", toggleDarkMode);
 
 
         function abrir() {
-            document.getElementById("mySidebar").style.height = "1000px";
+            document.getElementById("mySidebar").style.height = "100%";
             document.getElementById("mySidebar").style.width = "400px";
             document.getElementById("main").style.marginLeft = "300px";
         }
 
         function closeNav() {
 
-            document.getElementById("mySidebar").style.height = "0";
-            document.getElementById("mySidebar").style.width = "0";
-            document.getElementById("main").style.marginLeft = "0";
+            document.getElementById("mySidebar").style.height = "0px";
+            document.getElementById("mySidebar").style.width = "0px";
+            document.getElementById("main").style.marginLeft = "0px";
         }
 
 

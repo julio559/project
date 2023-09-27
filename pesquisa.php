@@ -14,34 +14,16 @@ include('nav2.php');
 
 $id = $_GET['id'];
 
-$sqlcli = "SELECT nome, img FROM clientes WHERE id = $id";
-$cli = $mysqli -> query($sqlcli);
-while ( $row3 = $cli -> fetch_assoc() ){
+$sql = "SELECT nome, img FROM clientes WHERE id = $id";
+$quert = $mysqli -> query($sql);
+while( $roww = $quert -> fetch_assoc() ){
 
-    $id_client = $row3['nome'];
-    $img = $row['img'];
-}
-
-$sql ="SELECT id_usuario FROM post WHERE id = $id";
-$sql2 = $mysqli->query($sql);
-while ($row = $sql2 ->fetch_assoc()) {
-
- $id_usuario = $row['id_usuario'];
-
-
+$nome = $roww['nome'];
+$img = $roww['img'];
 }
 
 
-$sqlr = "SELECT nome, img FROM clientes WHERE id = $id_usuario";
-$ecc = $mysqli -> query($sqlr);
-while( $row2 = $ecc -> fetch_assoc() ){
-
-$nome = $row2['nome'];
-$img = $row2['img'];
-
-}
-
-$sql3 = "SELECT foto, path, descricao, nome_usuario FROM post WHERE id_usuario = $id_usuario";
+$sql3 = "SELECT foto, path, descricao, nome_usuario FROM post WHERE id_usuario = $id";
 $query = $mysqli->query($sql3);
 ?>
 

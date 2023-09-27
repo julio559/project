@@ -123,6 +123,7 @@ border-radius: 1rem ;
 border: none ;
 background-color:  #add8e6;  
 padding: 1rem ;
+margin-left: 1rem ;
 }
 
 

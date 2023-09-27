@@ -34,7 +34,7 @@ if (isset($_POST['pe'])) {
             border: solid 1px #545F71;
             padding-top: 10rem;
             height: 100%;
-            width: 300px;
+            width: 0px;
             position: fixed;
             top: 0;
             left: 0;
@@ -201,7 +201,7 @@ text-align: center;
     
     
             echo '<div class="perfil">';
-    echo '<form action="perfil.php" method="GET">';
+    echo '<form action="pesquisa.php" method="GET">';
     echo '<input type="hidden" name="id" value="' . urlencode($row ['id']) . '">';
     echo '<br>';
     echo '<button class="mudar" type="submit"><img class="uno" src="' . $row['img'] . '" width="40px">' . $row['nome'] . '</button>';
@@ -221,8 +221,8 @@ text-align: center;
         }
 
         function abrir() {
-            document.getElementById("mySidebar").style.width = "300px";
-            document.getElementById("main").style.marginLeft = "300px";
+            document.getElementById("mySidebar").style.width = "400px";
+            document.getElementById("main").style.marginLeft = "400px";
         }
 
         function closeNav() {
