@@ -56,10 +56,12 @@ if ($mysqli->connect_errno) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200&family=Open+Sans:wght@300&family=Playfair+Display:ital,wght@1,500&family=Roboto+Mono:ital,wght@1,500&family=Roboto:wght@100&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
-    <style>
-        /* Adicione estas regras CSS para alinhar a imagem à esquerda e os inputs à direita */
-        .ola {
+    <link rel="stylesheet" type="text/css" href="criar2.css" media="screen" />
+
+<style>
+
+/* Adicione estas regras CSS para alinhar a imagem à esquerda e os inputs à direita */
+.ola {
             display: flex;
             align-items: center;
         }
@@ -189,7 +191,9 @@ border-radius: 3rem;
 
         }
 
-    </style>
+</style>
+
+
 </head>
 <body>
     <div class="ola image-left"> <!-- Adicione a classe 'image-left' aqui -->
@@ -202,7 +206,7 @@ border-radius: 3rem;
         <div class="direita">
        
 
-            <h1> Criar conta </h1>
+           
             <form action="insertc_client.php" method="post" enctype="multipart/form-data" >
 <br>
 

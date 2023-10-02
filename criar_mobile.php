@@ -50,72 +50,74 @@ if ($mysqli->connect_errno) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200&family=Open+Sans:wght@300&family=Playfair+Display:ital,wght@1,500&family=Roboto+Mono:ital,wght@1,500&family=Roboto:wght@100&display=swap">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f2f2f2;
-        }
+ <style>
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f2f2f2;
+}
 
-        .image-left img {
-            max-width: 100%;
-            height: auto;
-        }
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
 
-        .direita {
-            margin-top: 20px;
-        }
+.image-left img {
+    max-width: 100%;
+    height: auto;
+}
 
-        .direita input[type="file"] {
-            display: none;
-        }
+.direita {
+    margin-top: 20px;
+}
 
-        .custom-file-label {
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.direita input[type="file"] {
+    display: none;
+}
 
-        .custom-file-label:hover {
-            background-color: #2980b9;
-        }
+.custom-file-label {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-        .direita input[type="email"],
-        .direita input[type="text"],
-        .direita input[type="number"],
-        .direita input[type="date"],
-        .direita input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+.custom-file-label:hover {
+    background-color: #2980b9;
+}
 
-        .direita button {
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.direita input[type="email"],
+.direita input[type="text"],
+.direita input[type="number"],
+.direita input[type="date"],
+.direita input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 
-        .direita button:hover {
-            background-color: #2980b9;
-        }
-    </style>
+.direita button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.direita button:hover {
+    background-color: #2980b9;
+}
+
+</style>
 </head>
 <body>
     <div class="container">

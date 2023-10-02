@@ -196,7 +196,7 @@ padding-left: 33rem ;
             position: fixed;
             top: 0;
             left: 0;
-            background-color: whitE;
+            background-color: white;
             overflow-x: hidden;
             transition: 0.5s;
 
@@ -473,6 +473,11 @@ align-items: center;
     }
 }
 
+#nav{
+
+background-color: white;
+
+}
 
     </style>
 </head>
@@ -593,6 +598,9 @@ $id = $_COOKIE['id'];
 
         <a href="adote.php"> <img src="dog-in-front-of-a-man.png" width="30px"> Adote um Pet </a>
         <br>
+        <a href="suport.php"> <img src="dog-in-front-of-a-man.png" width="30px"> suporte</a>
+        <br>
+
         <form class="d-flex" role="search" method="post">
             <input name="ola" id="pirulitin" class="form-control me-2" type="search" placeholder="Search"
                 aria-label="Search" required>
@@ -603,22 +611,22 @@ $id = $_COOKIE['id'];
                 </svg> </button>
         </form>
         <?php
-        if (isset($result)) {
-            while ($row = $result->fetch_assoc()) {
-
-
-
-
-                echo '<div class="perfil">';
-                echo '<form action="pesquisa.php" method="GET">';
-                echo '<input type="hidden" name="id" value="' . urlencode($row['id']) . '">';
-                echo '<br>';
-                echo '<button class="mudar" type="submit"><img class="uno" src="' . $row['img'] . '" width="40px">' . $row['nome'] . '</button>';
-                echo '</form> </div>';
-
-            }
+ if (isset($result)) {
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo '<div class="perfil">';
+            echo '<form action="pesquisa.php" method="GET">';
+            echo '<input type="hidden" name="id" value="' . urlencode($row['id']) . '">';
+            echo '<br>';
+            echo '<button class="mudar" type="submit"><img class="uno" src="' . $row['img'] . '" width="40px">' . $row['nome'] . '</button>';
+            echo '</form> </div>';
         }
-        ?>
+    } else {
+
+        echo '<br> <img src="404-nada-encontrado_557227-17.avif" class="not">';
+    }
+   }
+?>
 
 
 
@@ -649,125 +657,108 @@ $id = $_COOKIE['id'];
 
 
     <?php
-    include('conexao.php');
-
-    $sql = "SELECT id, id_usuario, path, descricao, nome_usuario, image_usuario,like_count, tempo FROM post ORDER BY RAND()";
-    $result = $mysqli->query($sql);
-
-    if ($result) {
-        while ($row = $result->fetch_assoc()) {
-            $posts[] = $row; // Adiciona cada post ao array de posts
-    
-
-        }
-        $result->close();
-    }
-
-    foreach ($posts as $post) {
-        echo renderPost($post);
-    }
-
-    $mysqli->close();
-
-   
-    function renderPost($post)
-    {
-$id = $post['id'];
-$like_count = $post['like_count'];
-        $nome = $post['nome_usuario'];
-        $image = $post['image_usuario'];
-        $pathAleatorio = $post['path'];
-        $nomeAleatorio = $post['descricao'];
-$idd = $post['id_usuario'];
-
-$tempo = $post['tempo'];
+include('conexao.php');
 
 $mysqli = new mysqli('localhost', 'root', '', 'loja');
+
 if ($mysqli->connect_error) {
     die('Erro de conexão: ' . $mysqli->connect_error);
-}else
+}
 
+$sql = "SELECT id, id_usuario, path, descricao, nome_usuario, image_usuario, tempo FROM post ORDER BY RAND()";
+$result = $mysqli->query($sql);
 
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $posts[] = $row; // Adiciona cada post ao array de posts
+    }
+    $result->close();
+}
+
+foreach ($posts as $post) {
+    echo renderPost($post, $mysqli);
+}
+
+$mysqli->close();
+
+function renderPost($post, $mysqli)
+{
+    $id = $post['id'];
+    $nome = $post['nome_usuario'];
+    $image = $post['image_usuario'];
+    $pathAleatorio = $post['path'];
+    $nomeAleatorio = $post['descricao'];
+    $idd = $post['id_usuario'];
+    $tempo = $post['tempo'];
+
+    $sql = "SELECT COUNT(*) as like_count FROM post_likes WHERE post_id = $id";
+    $qq = $mysqli->query($sql);
+    
+    if ($qq) {
+        $row = $qq->fetch_assoc();
+        $like_count = $row['like_count'];
+    } else {
+        // Trate o erro, se necessário
+        $like_count = 0; // Defina um valor padrão para o número de curtidas
+    }
     
 
-return " 
+
+    return "
     <div class='container' id='home'>
-    <div class='post-header'>
-    <form action='pesquisa.php' method='GET'>
-
-<button id ='opa233'> 
-        <img id='myImage'  ondblclick='like()' src='$image'>
-        <strong> $nome  </strong>
-</button>
-<input type='hidden' name='id' value='$idd'>
-</form>
-    </div>
-    <img class='post_image'  src='$pathAleatorio' width='500px'>
-    <div class='post-actions'>
-        <div class='left-actions'>
-        <button class='like-button' data-post-id='$id'>❤️ <span class='like-number'> $like_count </span></button>
-
-            
-
-            <button type='button' class='button23' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='@mdo'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-chat-fill' viewBox='0 0 16 16'>
-                    <path d='M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.180-1.234A9.06 9.06 0 0 0 8 15z'/>
-                </svg>
-            </button>
-
-            <div class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-                <div class='modal-dialog'>
-                    <div class='modal-content'>
-                        <div class='modal-header'>
-                            <h1 class='modal-title fs-5' id='exampleModalLabel'>New message</h1>
-                            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-                        </div>
-                        <div class='modal-body'>
-                            <form method='POST'>
-                                <div class='mb-3'>
-                                    <label for='message-text' class='col-form-label'>Message:</label>
-                                    <input name='comente' class='form-control' id='message-text'></textarea>
-                                
-                          
-                        </div>
-                        </div>
-                         
-                        <div class='modal-footer'>
-                            <button type='button' class='btn btn-secondary' id='black' data-bs-dismiss='modal'>Close</button>
-                            <input type='submit'  id='black' class='btn btn-primary' value='Send message'></button>
-                            </form>
+        <div class='post-header'>
+            <form action='pesquisa.php' method='GET'>
+                <button id='opa233'>
+                    <img id='myImage' ondblclick='like()' src='$image'>
+                    <strong> $nome </strong>
+                </button>
+                <input type='hidden' name='id' value='$idd'>
+            </form>
+        </div>
+        <img class='post_image' src='$pathAleatorio' width='500px'>
+        <div class='post-actions'>
+            <div class='left-actions'>
+                <button class='like-button' data-post-id='$id'>❤️ <span class='like-number'> $like_count </span></button>
+                <button type='button' class='button23' data-bs-toggle='modal' data-bs-target='#exampleModal' data-bs-whatever='@mdo'>
+                    <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-chat-fill' viewBox='0 0 16 16'>
+                        <path d='M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.180-1.234A9.06 9.06 0 0 0 8 15z'/>
+                    </svg>
+                </button>
+                <div class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                    <div class='modal-dialog'>
+                        <div class='modal-content'>
+                            <div class='modal-header'>
+                                <h1 class='modal-title fs-5' id='exampleModalLabel'>New message</h1>
+                                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                            </div>
+                            <div class='modal-body'>
+                                <form method='POST'>
+                                    <div class='mb-3'>
+                                        <label for='message-text' class='col-form-label'>Message:</label>
+                                        <input name='comente' class='form-control' id='message-text'></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class='modal-footer'>
+                                <button type='button' class='btn btn-secondary' id='black' data-bs-dismiss='modal'>Close</button>
+                                <input type='submit' id='black' class='btn btn-primary' value='Send message'>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <button onclick='savePost()'>🔖</button>
         </div>
-     
-        <button onclick='savePost()'>🔖</button>
-    </div>
-    <div class='post-content'>
-        <p>$nomeAleatorio</p>
-    
-    </div>
-    <div class='post-comments'>
-        <p>View all 15 comments</p>
-        <p> postado em $tempo </p>
-    </div>
-</div>";
-    }
-
-    $mysqli = new mysqli('localhost', 'root', '', 'loja');
-    if ($mysqli->connect_error) {
-        die('Erro de conexão: ' . $mysqli->connect_error);
-    }
-
-   
-  
-    
-    
-    
-        
-
-    ?>
+        <div class='post-content'>
+            <p>$nomeAleatorio</p>
+        </div>
+        <div class='post-comments'>
+            <p>View all 15 comments</p>
+            <p> postado em $tempo </p>
+        </div>
+    </div>";
+}
+?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="seu_script.js"></script>
 <script>

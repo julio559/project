@@ -1,16 +1,7 @@
 <?php 
-
+include('conexao.php');
 $duracao = time() + (30 * 24 * 60 * 60);
-if (isset($_GET['img'])) {
 
-    $image = $_GET['img'];
-    if (setcookie("image", $_GET['img'], $duracao))
-        ;
-
-
-
-
-}
 
 
 
@@ -29,6 +20,25 @@ if (isset($_GET['nome'])) {
 
 }
 
-header('location: dashboard.php');
+$sql = "SELECT img FROM clientes WHERE nome = '$nome'";
+$quert = $mysqli -> query($sql);
+while($row = $quert -> fetch_assoc()){
 
+$img = $row['img'];
+
+}
+
+if (isset($img)) {
+
+   
+   setcookie("image", $img, $duracao);
+     
+
+
+
+
+}
+
+header('location: dashboard.php');
+       
 ?>

@@ -1,6 +1,8 @@
 <?php
 include('conexao.php');
 
+$erro = '';
+
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -24,13 +26,18 @@ if (isset($_POST['enviar'])) {
             
             header("Location: dashboard2.php?nome=" . urlencode($usuario['nome']) . "&img=" . urlencode($usuario['img'])  . "&id=" . urlencode($usuario['id']));
             exit;
-        } else {
-            echo 'Email ou senha incorretos';
+     
+          
+         
         }
     } else {
-        echo 'Email não encontrado';
+        $error = 'Email/nome ou senha não encontrado';
+        
     }
 }
+
+
+
 
 
 
@@ -178,6 +185,13 @@ align-items: center;
 
 
 
+.error{
+
+
+color: red;
+
+}
+
 </style>
 
 </head>
@@ -211,8 +225,29 @@ align-items: center;
                         </button>
                     </div>
                 </div>
+
+
+<p class="error"> <?php  if(isset($erro)){
+
+$erro;
+
+}
+
+
+  ?>   </p>
+
+<p class="error"> <?php if(isset($error)){
+
+
+echo $error;
+
+}
+
+?>
+</p>
+
                 <div class="entrar1">
-<input type="checkbox" required> Aceita nossos termos? <br>caso não o conheça </input> <a href="termo.php">clique aqui </a>
+<input type="checkbox" name="check" required> Aceita nossos termos? <br>caso não o conheça </input> <a href="termo.php">clique aqui </a>
 <br> <br> 
                     <input type="submit" name="enviar" class="ola" value="Entrar" id="entrar">
                     <a href="criar.php">Criar conta</a>

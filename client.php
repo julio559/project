@@ -44,7 +44,7 @@ if (isset($_GET['nome']) && is_numeric($_GET['nome'])) {
         $nome = $_POST['nome'];
         $numero = $_POST['numero'];
         $data = $_POST['data'];
-
+        $descricao = $_POST['descricao'];
 
         if (isset($_FILES['file'])) {
             $arquivo = $_FILES['file'];
@@ -99,8 +99,8 @@ if (isset($_GET['nome']) && is_numeric($_GET['nome'])) {
                     echo '<br>', ' <div class="belau"> <div class="afastar"> <p >  O nome já está sendo usado por outro usuário </p> </div></div> ';
                 }
 
-                $stmt = $mysqli->prepare("UPDATE clientes SET img = ?, nome = ?, email = ?, numero = ?, dat = ? WHERE id = ?");
-                $stmt->bind_param("sssssi", $path, $nome, $email, $numero, $data, $id);
+                $stmt = $mysqli->prepare("UPDATE clientes SET img = ?, nome = ?, email = ?, numero = ?, dat = ?, descricao = ? WHERE id = ?");
+                $stmt->bind_param("ssssssi", $path, $nome, $email, $numero, $data, $descricao, $id);
 
 
 
@@ -117,7 +117,7 @@ if (isset($_GET['nome']) && is_numeric($_GET['nome'])) {
         }
     }
 
-    $sql = "SELECT img, email, nome, numero, dat FROM clientes WHERE id = $id";
+    $sql = "SELECT img, email, nome, numero, dat, descricao FROM clientes WHERE id = $id";
     $result = $mysqli->query($sql);
 
     if ($result->num_rows > 0) {
@@ -128,6 +128,7 @@ if (isset($_GET['nome']) && is_numeric($_GET['nome'])) {
         $nome = $clientes['nome'];
         $numero = $clientes['numero'];
         $data = $clientes['dat'];
+        $descricao = $clientes['descricao'];
     } else {
         echo "Cliente não encontrado.";
         die();
@@ -146,56 +147,169 @@ if (isset($_GET['nome']) && is_numeric($_GET['nome'])) {
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="style1.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="client.css" media="screen" />
     <title>Editar Cliente</title>
+<style>
 
-    <style>
-        .img {
-            width: 50px;
+.center{
+padding-left: 50rem;
+padding-top: 6rem;
+    
+    }
+    
+    #config{
+    margin: 5px;
+   border: none;
+    border-radius: 1rem ;
+    padding-left: 1rem ;
+    padding-top: 1rem ;
+    padding-bottom: 1rem ;
+    padding-right: 5rem ;
+    background-color: #e7dfdf;
+    }
+
+    #config:focus{
+      
+        transition: 0.7s;
+outline-color: aqua ;
+
+
+    }
+
+    .opa{
+        margin: 5px;
+       border: none;
+        border-radius: 1rem ;
+        padding-left: 1rem ;
+        padding-top: 1rem ;
+        padding-bottom: 1rem ;
+        padding-right: 5rem ;
+        background-color: #e7dfdf;
+        }
+    
+        .opa:focus{
+          
+            transition: 0.7s;
+    outline-color: aqua ;
+    
+    
+        }
+    
+
+
+    
+    .senha{
+        margin: 5px;
+       border: none;
+        border-radius: 1rem ;
+        padding-left: 1rem ;
+        padding-top: 1rem ;
+        padding-bottom: 1rem ;
+        padding-right: 5rem ;
+       
         }
 
-        #passoword {
 
-
-            margin: 5px;
-            border: none;
-            border-radius: 1rem;
-            padding-left: 1rem;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-            padding-right: 5rem;
-        }
-
-
-        .passoword:focus {
-
+        .senha:focus{
+      
             transition: 1s;
-            outline-color: aqua;
-
-
+    outline-color: aqua ;
+    
+    
         }
 
-        .radius {
+    #img2{
+border: 1px solid;
+border-color: aqua;
+border-radius: 3rem ;
+padding: 1rem;
 
-            padding-top: 1rem;
-            border: none;
+    }
+
+    .radius{
+
+border-radius: 1rem;
+border-color: aqua;
+
+    }
 
 
-        }
+    .radius2{
+
+        border-radius: 1rem;
+        border-color: aqua;
+        padding-left: 5rem;
+        padding-right: 6rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+            }
+
+            .radius2:hover{
+background-color: cadetblue;
+transition: 1s;
 
 
-        .radius:hover {
+            }
 
-            background-color: #add8e6;
-            transition: 2s;
-        }
+            .center2{
+margin-bottom: 2rem;
+                padding-left: 6rem;
+            }
+            
+            
+            .center2  img{
 
-        .retorna {
+border-radius: 3rem;
 
-            padding-left: 3rem;
+            }
+            .img {
+                width: 50px;
+            }
+    
+            #passoword {
+    
+    
+                margin: 5px;
+                border: none;
+                border-radius: 1rem;
+                padding-left: 1rem;
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+                padding-right: 5rem;
+            }
+    
+    
+            .passoword:focus {
+    
+                transition: 1s;
+                outline-color: aqua;
+    
+    
+            }
+    
+            .radius {
+    
+                padding-top: 1rem;
+                border: none;
+    
+    
+            }
+    
+    
+            .radius:hover {
+    
+                background-color: #add8e6;
+                transition: 2s;
+            }
+    
+            .retorna {
+    
+                padding-left: 3rem;
+    
+            }
 
-        }
-    </style>
+</style>
+   
 </head>
 
 <body>
@@ -225,6 +339,9 @@ if (isset($_GET['nome']) && is_numeric($_GET['nome'])) {
         <input id="config" type="email" value="<?php echo $email; ?>" name="email" placeholder="Email">
         <br><br>
         <input id="config" value="<?php echo $nome; ?>" type="text" name="nome" placeholder="Nome Completo">
+        <br><br>
+
+        <input id="config" type="text" value="<?php echo $descricao; ?>" name="descricao" placeholder="DESCRIÇÃO DA CONTA">
         <br><br>
         <input type="tel" id="config" value="<?php echo $numero; ?>" name="numero" placeholder="Número de Telefone">
         <br><br>

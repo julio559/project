@@ -9,9 +9,12 @@ if (count($_POST) > 0) {
     $data = $_POST['data'];
     $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
-if ( $senha < 8 || $senha > 20  ){
+if ( $senha > 8 || $senha < 20  ){
 
-echo " a senha deve conter entre 8 a 20 caracteres ";
+
+}else{
+
+echo "a senha tem que ser maior que 8 e menor que 20 caracteres";
 die();
 
 }
